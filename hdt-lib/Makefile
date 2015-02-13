@@ -1,6 +1,6 @@
 OS := $(shell uname)
 
-LIBCDSPATH = ../cds-2.0.0
+LIBCDSPATH = ../libcds2
 
 # Uncomment here to enable optional dependencies
 RAPTOR_SUPPORT=true
@@ -10,11 +10,11 @@ SERD_SUPPORT=true
 
 CPP=g++ 
 FLAGS=-O3 -Wno-deprecated
-INCLUDES=-I $(LIBCDSPATH)/includes/ -I /usr/local/include -I ./include -I /opt/local/include -I /usr/include
+INCLUDES=-I $(LIBCDSPATH)/include/ -I /usr/local/include -I ./include -I /opt/local/include -I /usr/include
 LDFLAGS=-lm -lpthread -ldl -lstdc++
 DOXYGEN=doxygen
 DEFINES= -DHAVE_CDS
-LIB=$(LIBCDSPATH)/bin/gcc-amd64-linux-64/libcds.so -L/usr/local/lib -lstdc++
+LIB=$(LIBCDSPATH)/lib/libcds2.la -L/usr/local/lib -lstdc++
 
 ifeq ($(RAPTOR_SUPPORT), true)
 DEFINES:=$(DEFINES) -DHAVE_RAPTOR
@@ -55,7 +55,7 @@ EXAMPLES=$(patsubst %.cpp,%, $(wildcard examples/*.cpp))
 
 all:
 	@$(MAKE) showflags 
-	#@$(MAKE) -C $(LIBCDSPATH) release
+	@$(MAKE) -C $(LIBCDSPATH)
 	@$(MAKE) tools tests/jointest
 	#@$(MAKE) tests examples
 

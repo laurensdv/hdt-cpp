@@ -1,0 +1,3 @@
+[submodule "libcds2"]
+	path = libcds2
+	url = https://github.com/fclaude/libcds2.git

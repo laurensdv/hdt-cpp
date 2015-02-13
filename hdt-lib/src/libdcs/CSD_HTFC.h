@@ -38,9 +38,9 @@
 
 using namespace std;
 
-#include <Array.h>
-#include <libcdsBasics.h>
-using namespace cds_utils;
+#include <libcds2/array.h>
+#include <libcds2/libcds.h>
+using namespace cds;
 
 #include <Iterator.hpp>
 #include <HDTListener.hpp>
@@ -76,12 +76,12 @@ class CSD_HTFC : public CSD
 	@s: the string to be located.
 	@len: the length (in characters) of the string s.
     */
-    uint32_t locate(const uchar *s, uint32_t len);
+    uint32_t locate(const basic::cds_uchar *s, uint32_t len);
 
     /** Returns the string identified by id.
 	@id: the identifier to be extracted.
     */
-    uchar * extract(uint32_t id);
+    basic::cds_uchar * extract(uint32_t id);
 
     void freeString(const unsigned char *str);
 
@@ -90,7 +90,7 @@ class CSD_HTFC : public CSD
 	@dict: the plain uncompressed dictionary.
 	@return: number of total symbols in the dictionary.
     */
-    uint decompress(uchar **dict);
+    uint decompress(basic::cds_uchar **dict);
 
     void dumpAll();
     void dumpBlock(uint block);
@@ -115,14 +115,14 @@ class CSD_HTFC : public CSD
 
   protected:
     uint64_t bytes;	//! Size of the Front-Coding encoded sequence (in bytes).
-    uchar *text;	//! Front-Coding encoded sequence.
+    basic::cds_uchar *text;	//! Front-Coding encoded sequence.
     uint32_t maxlength; //! Max length of a string
 
     uint32_t blocksize;	//! Number of strings stored in each block.
     uint32_t nblocks;	//! Number of total blocks in the dictionary.
-    Array *blocks;	//! Start positions of dictionary blocks.
+    basic::Array *blocks;	//! Start positions of dictionary blocks.
 
-    BitString *tree;	//! Hu-Tucker tree shape (ESPECIFICAR COMO CRESTA SE CODIFICA!!!!)
+    basic::cds_uchar *tree;	//! Hu-Tucker tree shape (ESPECIFICAR COMO CRESTA SE CODIFICA!!!!)
     Node *HTtree;	//! Hu-Tucker tree
     uint leafs;		//! Leafs in the Hu-Tucker tree.
     Tcode *HTcode;	//! Vector assigning Hu-Tucker codes to the symbols in the text.
@@ -136,7 +136,7 @@ class CSD_HTFC : public CSD
 	@return: a boolean value pointing if the string is located (this only
 	 occurs when 's' is the first string in 'block').
     */
-    bool locateBlock(const uchar *s, uint *block);
+    bool locateBlock(const basic::cds_uchar *s, uint *block);
 
     /** Locates the offset for 's' in 'block' (returning its global ID) or 
 	return 0 if it is  not exist 
@@ -145,14 +145,14 @@ class CSD_HTFC : public CSD
 	@len: the length (in characters) of the string s.
 	@return: the ID for 's' or 0 if it is not exist.
     */
-    uint locateInBlock(uint block, const uchar *s, uint len);
+    uint locateInBlock(uint block, const basic::cds_uchar *s, uint len);
 
     /** Extracts the o-th string in the given 'block'.
 	@block: block to be accesed.
 	@o: internal offset for the required string in the block.
 	@s: the extracted string.
     */
-    void extractInBlock(uint block, uint o, uchar *s);
+    void extractInBlock(uint block, uint o, basic::cds_uchar *s);
 
     /** Obtains the length of the long common prefix (lcp) of str1 and str2.
 	@str1: first string in the comparison.
@@ -160,7 +160,7 @@ class CSD_HTFC : public CSD
 	@lstr1: length of the first string.
 	@lstr2: length of the second string.
     */
-    uint longest_common_prefix(const uchar* str1, const uchar* str2, uint lstr1, uint lstr2);
+    uint longest_common_prefix(const basic::cds_uchar* str1, const basic::cds_uchar* str2, uint lstr1, uint lstr2);
 
     /** Decompress a VByte code encoding the 'delta' value respect to the
 	previous string.
@@ -169,7 +169,7 @@ class CSD_HTFC : public CSD
 	@offset: offset within this last byte.
 	@deltaseq: the VByte subsequence encoding 'delta'.
     */
-    void decompressDelta(uchar *seq, uint *pos, uint *offset, uchar *deltaseq);
+    void decompressDelta(basic::cds_uchar *seq, uint *pos, uint *offset, basic::cds_uchar *deltaseq);
 
     /** Decompress the suffix associate to a given word.
 	@seq: string containing the text to be decoded.
@@ -178,7 +178,7 @@ class CSD_HTFC : public CSD
 	@suffix: pointer to store the suffix word.
 	@return: number of characters extracted.
     */
-    uint decompressWord(uchar *seq, uint *pos, uint *offset, uchar *suffix);
+    uint decompressWord(basic::cds_uchar *seq, uint *pos, uint *offset, basic::cds_uchar *suffix);
 
     /** Decompress the first word in a given block (starting in pos).
 	@seq: string containing the text to be decoded.
@@ -186,7 +186,7 @@ class CSD_HTFC : public CSD
 	@word: pointer to store the word.
 	@return: number of characters extracted.
     */
-    uint decompressFirstWord(uchar *seq, uint *pos, uchar *word);
+    uint decompressFirstWord(basic::cds_uchar *seq, uint *pos, basic::cds_uchar *word);
 
     /** Performs a Hu-Tucker encoding of code by using len bits.
 	@code: value to be encoded.
@@ -195,7 +195,7 @@ class CSD_HTFC : public CSD
 	@pos: pointer to the byte at which start encoding.
 	@offset: offset within this last byte.
     */
-    void encodeHT(uint code, uint len, uchar *seq, uint *pos, uint *offset);
+    void encodeHT(uint code, uint len, basic::cds_uchar *seq, uint *pos, uint *offset);
 
     /** Decodes a Hu-Tucker code.
 	@seq: string containing the text to be decoded.
@@ -203,7 +203,7 @@ class CSD_HTFC : public CSD
 	@offset: offset within this last byte.
 	@return: the decoded char.
     */
-    uchar decodeHT(uchar *seq, uint *pos, uint *offset);
+    basic::cds_uchar decodeHT(basic::cds_uchar *seq, uint *pos, uint *offset);
   };
 };
 

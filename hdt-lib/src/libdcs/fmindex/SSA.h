@@ -34,70 +34,68 @@
 #ifndef SSA_WORDS_H
 #define SSA_WORDS_H
 
-#include <SequenceBuilder.h>
-#include <Sequence.h>
-#include <BitSequenceBuilder.h>
-#include <BitSequence.h>
+#include <libcds2/immutable/sequence.h>
+#include <libcds2/immutable/bitsequence.h>
 
-#include <Mapper.h>
+#include <libcds2/immutable/mapper.h>
 #include <algorithm>
 
 #include "SuffixArray.h"
 
 using namespace std;
-using namespace cds_static;
+using namespace cds;
 
 namespace csd{
 	class SSA{
 		public:
-			SSA(uchar * seq, uint n, bool free_text=false, bool use_sampling=false);
+			SSA(basic::cds_uchar * seq, basic::cds_uint n, bool free_text=false, bool use_sampling=false);
 			SSA();
 			~SSA();
 
-			bool set_static_sequence_builder(SequenceBuilder * ssb);
-			bool set_static_bitsequence_builder(BitSequenceBuilder * sbb);
-			bool set_samplesuff(uint sample);
+//			bool set_static_sequence_builder(immutable::SequenceBuilder * ssb);
+			bool set_static_bitsequence_builder(immutable::BitSequenceBuilder * sbb);
+			bool set_samplesuff(basic::cds_uint sample);
 
 			bool build_index();
 
-			uint size();
+			basic::cds_uint size();
 			void print_stats();
-			uint length();
+			basic::cds_uint length();
 
-			uint LF(uint i);
-			uint locate_id(uchar * pattern, uint m);
-			uint locate(uchar * pattern, uint m, uint32_t **occs);
+			basic::cds_uint LF(basic::cds_uint i);
+			basic::cds_uint locate_id(basic::cds_uchar * pattern, basic::cds_uint m);
+			basic::cds_uint locate(basic::cds_uchar * pattern, basic::cds_uint m, uint32_t **occs);
 
-			uchar * extract_id(uint id, uint max_len);
+			basic::cds_uchar * extract_id(basic::cds_uint id, basic::cds_uint max_len);
             static SSA * load(istream &fp);
             void save(ostream & fp);
 
 		protected:
-			uint n;
-			Sequence * bwt;
+			basic::cds_uint n;
+			immutable::Sequence * bwt;
 
-			BitSequence * sampled;
-			uint samplesuff;
-			uint * suff_sample;  
+			immutable::BitSequence * sampled;
+			basic::cds_uint samplesuff;
+			basic::cds_uint * suff_sample;  
 			
-			uint * occ;
-			uint maxV;
+			basic::cds_uint * occ;
+			basic::cds_uint maxV;
 			bool built;
 			bool free_text;
 			bool use_sampling;
 			bool *alphabet;	
 
 			/*use only for construction*/
-			uchar * _seq;
-			uint * _bwt;   
+			basic::cds_uchar * _seq;
+			basic::cds_uint * _bwt;   
 			unsigned long * _sa;   
-			SequenceBuilder * _ssb;
-			BitSequenceBuilder * _sbb;
+//			immutable::SequenceBuilder * _ssb;
+			immutable::BitSequenceBuilder * _sbb;
 			/*******************************/
 
 			void build_bwt();
 			void build_sa();
-			int cmp(uint i, uint j);
+			int cmp(basic::cds_uint i, basic::cds_uint j);
 	};
 
 };

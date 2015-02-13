@@ -39,10 +39,8 @@
 #include "CSD.h"
 
 #include <Iterator.hpp>
-#include <SequenceBuilder.h>
-#include <Sequence.h>
-#include <BitSequenceBuilder.h>
-#include <BitSequence.h>
+#include <libcds2/immutable/sequence.h>
+#include <libcds2/immutable/bitsequence.h>
 #include "fmindex/SSA.h"
 
 #include <set>
@@ -123,7 +121,7 @@ namespace csd{
 		
 		protected:
 			SSA *fm_index;
-			BitSequence *separators;
+			immutable::BitSequence *separators;
 			bool use_sampling;
 			uint32_t maxlength;
 

@@ -1,2 +1,0 @@
-#ifndef _LIBCDSBASICS_H
-#define _LIBCDSBASICS_H

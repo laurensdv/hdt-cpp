@@ -45,7 +45,7 @@ class HuTucker{
     void print();
     void printLevels();
 
-    uint getCodes(Tcode** code, BitString **tree);
+    uint getCodes(Tcode** code, basic::cds_word **tree);
 };
 
 template <class T>
@@ -211,11 +211,11 @@ void HuTucker<T>::print(){
 }
 
 template <class T>
-uint HuTucker<T>::getCodes(Tcode** codes, BitString **tree)
+uint HuTucker<T>::getCodes(Tcode** codes, basic::cds_word **tree)
 {
 	bool *bits = new bool[32];
 	*codes = new Tcode[len];
-	*tree = new BitString(2*(weight+len));
+	*tree = new basic::cds_word(2*(weight+len));
 
 	if (root != 0)
 	{

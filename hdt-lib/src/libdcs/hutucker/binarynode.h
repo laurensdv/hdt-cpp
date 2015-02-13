@@ -7,9 +7,9 @@
 #ifndef BINARYTRIE_H_INCLUDED
 #define BINARYTRIE_H_INCLUDED
 
-#include <BitString.h>
-#include <libcdsBasics.h>
-using namespace cds_utils;
+#include <libcds2/libcds.h>
+#include <libcds2/immutable/bitsequence.h>
+using namespace cds;
 
 #include<iostream>
 using namespace std;
@@ -38,7 +38,7 @@ class BNode{
     BNode(int v, int p, int t, T* o);
     ~BNode(){};
     void print();
-    void code(int level, Tcode **codes, BitString **tree, bool *bits, int *tpos);
+    void code(int level, Tcode **codes, basic::cds_word **tree, bool *bits, int *tpos);
     void setEndpoints(int start, int end);
     void recPrint(int level=0);
 };
@@ -79,8 +79,11 @@ void BNode<T>::print(){
 }
 
 template <class T>
-void BNode<T>::code(int level, Tcode **codes, BitString **tree, bool *bits, int *tpos)
+void BNode<T>::code(int level, Tcode **codes, basic::cds_word **tree, bool *bits, int *tpos)
 {
+    throw "Unsupported function code for binarynode";
+
+    /*
     (*tpos)++;
 
     if(children[0])
@@ -94,7 +97,7 @@ void BNode<T>::code(int level, Tcode **codes, BitString **tree, bool *bits, int 
     else
     {
 	uint code = 0;
-	for (int i=1; i<=level; i++) if (bits[i-1]) cds_utils::bitset(&code, level-i);
+	for (int i=1; i<=level; i++) if (bits[i-1]) basic::BitSet(&code, level-i);
 
 	(*codes)[pos].code = code;
 	(*codes)[pos].cbits = level;
@@ -102,6 +105,7 @@ void BNode<T>::code(int level, Tcode **codes, BitString **tree, bool *bits, int 
 
     (*tree)->setBit((*tpos), 1);
     (*tpos)++;
+    */
 }
 
 template <class T>

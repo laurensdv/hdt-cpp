@@ -142,7 +142,7 @@ CSD_FMIndex::CSD_FMIndex(hdt::IteratorUCharString *it, bool sparse_bitsequence, 
 	build_ssa((unsigned char *) textFinal, len, sparse_bitsequence, bparam, use_sample,	bwt_sample);
 	if (use_sample) {
 		//separators = new BitSequenceRRR(bitmap, len);
-		separators = new BitSequenceRG(bitmap, len, 4);
+		separators = new immutable::BitSequenceRG(bitmap, len, 4);
 		delete[] bitmap;
 	}
 	delete[] text;
@@ -157,11 +157,11 @@ void CSD_FMIndex::build_ssa(unsigned char *text, size_t len, bool sparse_bitsequ
 	Mapper * am = new MapperNone();
     am->use();
     wt_coder * wc = new wt_coder_huff((unsigned char *) text, len, am);
-	BitSequenceBuilder * sbb;
+	immutable::BitSequenceBuilder * sbb;
 	if (sparse_bitsequence)
-		sbb = new BitSequenceBuilderRRR(bparam);
+		sbb = new immutable::BitSequenceBuilderRRR(bparam);
 	else
-		sbb = new BitSequenceBuilderRG(bparam);
+		sbb = new immutable::BitSequenceBuilderRG(bparam);
 	fm_index->set_static_bitsequence_builder(sbb);
 
     SequenceBuilder * ssb = new SequenceBuilderWaveletTree(sbb, am, wc);
@@ -293,7 +293,7 @@ size_t CSD_FMIndex::load(unsigned char *ptr, unsigned char *ptrMax)
     this->maxlength = loadValue<uint32_t>(localStream);
     this->use_sampling = loadValue<bool>(localStream);
     if (this->use_sampling)
-        this->separators = BitSequence::load(localStream);
+        this->separators = immutable::BitSequence::load(localStream);
     this->fm_index = SSA::load(localStream);
 
     return localStream.tellg();
@@ -308,7 +308,7 @@ CSD * CSD_FMIndex::load(istream & fp) {
 	fm->maxlength = loadValue<uint32_t>(fp);
 	fm->use_sampling = loadValue<bool>(fp);
 	if (fm->use_sampling)
-		fm->separators = BitSequence::load(fp);
+		fm->separators = immutable::BitSequence::load(fp);
 	fm->fm_index = SSA::load(fp);
 
 	return fm;
