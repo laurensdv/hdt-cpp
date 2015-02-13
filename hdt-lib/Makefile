@@ -13,7 +13,7 @@ FLAGS=-O3 -Wno-deprecated
 INCLUDES=-I $(LIBCDSPATH)/includes/ -I /usr/local/include -I ./include -I /opt/local/include -I /usr/include
 LDFLAGS=-lm -lpthread -ldl -lstdc++
 DOXYGEN=doxygen
-DEFINES=
+DEFINES= -DHAVE_CDS
 LIB=$(LIBCDSPATH)/bin/gcc-amd64-linux-64/libcds.so -L/usr/local/lib -lstdc++
 
 ifeq ($(RAPTOR_SUPPORT), true)
