@@ -51,6 +51,12 @@ Edit Makefile uncommenting these lines to include compile support for the option
 #KYOTO_SUPPORT=true
 #LIBZ_SUPPORT=true
 
+First run $(LIBCDSPATH)/build/sample/build-<your architecture>.sh
+
+Set the path to the LIBCDS of your distribution
+
+LIB=$(LIBCDSPATH)/bin/gcc-<your architecture>/libcds.so -L/usr/local/lib -lstdc++
+
 Compile:
 	Run `make` under hdt-lib to compile the library and tools.
 
